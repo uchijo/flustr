@@ -22,6 +22,7 @@ ProfileData _$ProfileDataFromJson(Map<String, dynamic> json) {
 mixin _$ProfileData {
   String get username => throw _privateConstructorUsedError;
   String get icon => throw _privateConstructorUsedError;
+  String get about => throw _privateConstructorUsedError;
   String get pubHex => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +37,7 @@ abstract class $ProfileDataCopyWith<$Res> {
           ProfileData value, $Res Function(ProfileData) then) =
       _$ProfileDataCopyWithImpl<$Res, ProfileData>;
   @useResult
-  $Res call({String username, String icon, String pubHex});
+  $Res call({String username, String icon, String about, String pubHex});
 }
 
 /// @nodoc
@@ -54,6 +55,7 @@ class _$ProfileDataCopyWithImpl<$Res, $Val extends ProfileData>
   $Res call({
     Object? username = null,
     Object? icon = null,
+    Object? about = null,
     Object? pubHex = null,
   }) {
     return _then(_value.copyWith(
@@ -64,6 +66,10 @@ class _$ProfileDataCopyWithImpl<$Res, $Val extends ProfileData>
       icon: null == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
+              as String,
+      about: null == about
+          ? _value.about
+          : about // ignore: cast_nullable_to_non_nullable
               as String,
       pubHex: null == pubHex
           ? _value.pubHex
@@ -81,7 +87,7 @@ abstract class _$$ProfileDataImplCopyWith<$Res>
       __$$ProfileDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, String icon, String pubHex});
+  $Res call({String username, String icon, String about, String pubHex});
 }
 
 /// @nodoc
@@ -97,6 +103,7 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
   $Res call({
     Object? username = null,
     Object? icon = null,
+    Object? about = null,
     Object? pubHex = null,
   }) {
     return _then(_$ProfileDataImpl(
@@ -107,6 +114,10 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
       icon: null == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
+              as String,
+      about: null == about
+          ? _value.about
+          : about // ignore: cast_nullable_to_non_nullable
               as String,
       pubHex: null == pubHex
           ? _value.pubHex
@@ -120,7 +131,10 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ProfileDataImpl implements _ProfileData {
   _$ProfileDataImpl(
-      {required this.username, required this.icon, required this.pubHex});
+      {required this.username,
+      required this.icon,
+      required this.about,
+      required this.pubHex});
 
   factory _$ProfileDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileDataImplFromJson(json);
@@ -130,11 +144,13 @@ class _$ProfileDataImpl implements _ProfileData {
   @override
   final String icon;
   @override
+  final String about;
+  @override
   final String pubHex;
 
   @override
   String toString() {
-    return 'ProfileData(username: $username, icon: $icon, pubHex: $pubHex)';
+    return 'ProfileData(username: $username, icon: $icon, about: $about, pubHex: $pubHex)';
   }
 
   @override
@@ -145,12 +161,13 @@ class _$ProfileDataImpl implements _ProfileData {
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.about, about) || other.about == about) &&
             (identical(other.pubHex, pubHex) || other.pubHex == pubHex));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, icon, pubHex);
+  int get hashCode => Object.hash(runtimeType, username, icon, about, pubHex);
 
   @JsonKey(ignore: true)
   @override
@@ -170,6 +187,7 @@ abstract class _ProfileData implements ProfileData {
   factory _ProfileData(
       {required final String username,
       required final String icon,
+      required final String about,
       required final String pubHex}) = _$ProfileDataImpl;
 
   factory _ProfileData.fromJson(Map<String, dynamic> json) =
@@ -179,6 +197,8 @@ abstract class _ProfileData implements ProfileData {
   String get username;
   @override
   String get icon;
+  @override
+  String get about;
   @override
   String get pubHex;
   @override

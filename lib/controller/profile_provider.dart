@@ -13,6 +13,7 @@ class ProfileData with _$ProfileData {
   factory ProfileData({
     required String username,
     required String icon,
+    required String about,
     required String pubHex,
   }) = _ProfileData;
 
@@ -26,5 +27,6 @@ FutureOr<ProfileData> profile(ProfileRef ref) {
     username: 'uchijo',
     icon: 'https://www.uchijo.com/icon.jpg',
     pubHex: 'e62f27d2814a25171c466d2d7612ad1a066db1362b4e259db5c076f9e6b21cb7',
+    about: 'おいも おいも',
   );
 }

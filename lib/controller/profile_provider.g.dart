@@ -10,6 +10,7 @@ _$ProfileDataImpl _$$ProfileDataImplFromJson(Map<String, dynamic> json) =>
     _$ProfileDataImpl(
       username: json['username'] as String,
       icon: json['icon'] as String,
+      about: json['about'] as String,
       pubHex: json['pubHex'] as String,
     );
 
@@ -17,6 +18,7 @@ Map<String, dynamic> _$$ProfileDataImplToJson(_$ProfileDataImpl instance) =>
     <String, dynamic>{
       'username': instance.username,
       'icon': instance.icon,
+      'about': instance.about,
       'pubHex': instance.pubHex,
     };
 
@@ -24,7 +26,7 @@ Map<String, dynamic> _$$ProfileDataImplToJson(_$ProfileDataImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$profileHash() => r'16dabb933783b34e380351e4e93e6c3c4698bf7d';
+String _$profileHash() => r'067cfac98a1ed889d60e7523962a3a0bda80e69e';
 
 /// See also [profile].
 @ProviderFor(profile)
