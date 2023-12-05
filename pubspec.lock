@@ -41,6 +41,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  bech32:
+    dependency: transitive
+    description:
+      name: bech32
+      sha256: "156cbace936f7720c79a79d16a03efad343b1ef17106716e04b8b8e39f99f7f7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2"
+  bip340:
+    dependency: transitive
+    description:
+      name: bip340
+      sha256: "2a92f6ed68959f75d67c9a304c17928b9c9449587d4f75ee68f34152f7f69e87"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -419,6 +435,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  nostr:
+    dependency: "direct main"
+    description:
+      name: nostr
+      sha256: "4069136c922a943412eac6cedce58dd4623720f1f80de81ac873498d35eb0ef9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.3"
   package_config:
     dependency: transitive
     description:
@@ -435,6 +459,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "7c1e5f0d23c9016c5bbd8b1473d0d3fb3fc851b876046039509e18e0c7485f2c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.7.3"
   pool:
     dependency: transitive
     description:
