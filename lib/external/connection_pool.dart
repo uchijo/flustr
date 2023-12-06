@@ -40,19 +40,17 @@ class ConnectionPool {
     await connected;
 
     // 全部のソケットでeoseまで待つ
-    final subs = <OneshotSubscription>[];
+    final subs = <Future<List<Event>>>[];
     for (final relay in relays) {
-      final sub = OneshotSubscription(filters, relay);
-      subs.add(sub);
-      sub.receive();
+      subs.add(summariseUntilEose(filters, relay));
     }
-    await Future.wait(subs.map((e) => e.gotEose));
+    final overlappingEventsList = await Future.wait(subs);
 
     // 重複を消しつつ集計
     final events = <Event>[];
     final ids = <String>{};
-    for (final sub in subs) {
-      for (final event in sub.events) {
+    for (final overlappingEvents in overlappingEventsList) {
+      for (final event in overlappingEvents) {
         if (!ids.contains(event.id)) {
           events.add(event);
           ids.add(event.id);

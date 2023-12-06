@@ -4,49 +4,53 @@ import 'dart:io';
 import 'package:nostr/nostr.dart';
 
 // eoseまで一つのリレーから値を受け取るオブジェクト
-class OneshotSubscription {
-  OneshotSubscription(this._filters, this._socket) {
-    _subscriptionId = generate64RandomHexChars().substring(0, 32);
-  }
-  late final String _subscriptionId;
-  final WebSocket _socket;
-  // eose時に解決する
-  final Completer<void> _gotEose = Completer();
-  final List<Filter> _filters;
+Future<List<Event>> summariseUntilEose(
+  List<Filter> filters,
+  WebSocket socket, {
+  Duration timeout = const Duration(milliseconds: 500),
+}) async {
+  final subscriptionId = generate64RandomHexChars().substring(0, 32);
+  final Completer<void> gotEose = Completer();
+  var isEose = false;
   final List<Event> events = <Event>[];
-  bool _isEose = false;
 
-  Future<void> get gotEose => _gotEose.future;
-  bool get isEose => _isEose;
+  // 聞く準備
+  final sub = socket.listen((rawMessage) {
+    final message = Message.deserialize(rawMessage);
+    switch (message.messageType) {
+      case MessageType.event:
+        if (isEose) {
+          break;
+        }
+        final event = message.message as Event;
+        if (event.subscriptionId == subscriptionId) {
+          // 関係ないのは拾わない
+          events.add(event);
+        }
+        break;
+      case MessageType.eose: // eoseが来た瞬間に通信終わり
+        final eose = message.message as Eose;
+        if (eose.subscriptionId == subscriptionId) {
+          gotEose.complete();
+          isEose = true;
+        }
+        break;
+      default:
+        // do nothing
+        break;
+    }
+  });
 
-  void receive({Duration timeout = const Duration(milliseconds: 5000)}) {
-    final request = Request(_subscriptionId, _filters);
+  // 通信開始
+  final request = Request(subscriptionId, filters);
+  socket.add(request.serialize());
 
-    final sub = _socket.listen((rawMessage) {
-      final message = Message.deserialize(rawMessage);
-      switch (message.messageType) {
-        case MessageType.event:
-          if (!_isEose) {
-            final event = message.message as Event;
-            events.add(event);
-          }
-          break;
-        case MessageType.eose:
-          _socket.add(Close(_subscriptionId).serialize());
-          _gotEose.complete();
-          _isEose = true;
-          break;
-        default:
-          // do nothing
-          break;
-      }
-    });
-    _socket.add(request.serialize());
-    Future.any([gotEose, Future.delayed(timeout)]).then((value) {
-      sub.cancel();
-      if (!_gotEose.isCompleted) {
-        _gotEose.complete();
-      }
-    });
-  }
+  // タイムアウトかeoseが来るまで待つ
+  await Future.any([gotEose.future, Future.delayed(timeout)]);
+  print('wait done');
+  sub.cancel(); // listenやめる
+  socket.add(Close(subscriptionId).serialize()); // subscribeやめる
+
+  // eoseじゃない場合は途中まで来てたのも破棄
+  return isEose ? events : [];
 }
