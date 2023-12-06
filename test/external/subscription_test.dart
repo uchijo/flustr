@@ -19,7 +19,6 @@ Future<void> main() async {
 
       // socketごとのイベント待ち受け
       serverSocket.listen((event) {
-        print('got event: $event');
         final decoded = jsonDecode(event);
         try {
           switch (pattern) {

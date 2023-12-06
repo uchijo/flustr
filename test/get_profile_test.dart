@@ -27,7 +27,6 @@ void main() {
       expect(result.length, 1);
       final content = jsonDecode(result.first.content) as Map;
       expect(content['name'], 'uchijo');
-      print(content);
     },
   );
   test(

@@ -15,10 +15,8 @@ class ConnectionPool {
     for (final url in _urls) {
       socketFutures.add(WebSocket.connect(url));
     }
-    print('hogehoge~');
     Future.wait(socketFutures).then(
       (sockets) async {
-        print('connected~');
         relays = sockets;
         completer.complete();
       },

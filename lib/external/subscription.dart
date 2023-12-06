@@ -47,7 +47,6 @@ Future<List<Event>> summariseUntilEose(
 
   // タイムアウトかeoseが来るまで待つ
   await Future.any([gotEose.future, Future.delayed(timeout)]);
-  print('wait done');
   sub.cancel(); // listenやめる
   socket.add(Close(subscriptionId).serialize()); // subscribeやめる
 
