@@ -17,6 +17,7 @@ dependencies:
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
   nostr: ^1.4.3
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
