@@ -20,6 +20,8 @@ AppSetting _$AppSettingFromJson(Map<String, dynamic> json) {
       return NsecAppSetting.fromJson(json);
     case 'npub':
       return NpubAppSetting.fromJson(json);
+    case 'empty':
+      return EmptyAppSetting.fromJson(json);
 
     default:
       throw CheckedFromJsonException(json, 'runtimeType', 'AppSetting',
@@ -31,20 +33,23 @@ AppSetting _$AppSettingFromJson(Map<String, dynamic> json) {
 mixin _$AppSetting {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? nsec1) nsec,
-    required TResult Function(String? npub1) npub,
+    required TResult Function(String nsec1) nsec,
+    required TResult Function(String npub1) npub,
+    required TResult Function() empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String? nsec1)? nsec,
-    TResult? Function(String? npub1)? npub,
+    TResult? Function(String nsec1)? nsec,
+    TResult? Function(String npub1)? npub,
+    TResult? Function()? empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? nsec1)? nsec,
-    TResult Function(String? npub1)? npub,
+    TResult Function(String nsec1)? nsec,
+    TResult Function(String npub1)? npub,
+    TResult Function()? empty,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -52,18 +57,21 @@ mixin _$AppSetting {
   TResult map<TResult extends Object?>({
     required TResult Function(NsecAppSetting value) nsec,
     required TResult Function(NpubAppSetting value) npub,
+    required TResult Function(EmptyAppSetting value) empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(NsecAppSetting value)? nsec,
     TResult? Function(NpubAppSetting value)? npub,
+    TResult? Function(EmptyAppSetting value)? empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NsecAppSetting value)? nsec,
     TResult Function(NpubAppSetting value)? npub,
+    TResult Function(EmptyAppSetting value)? empty,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -94,7 +102,7 @@ abstract class _$$NsecAppSettingImplCopyWith<$Res> {
           $Res Function(_$NsecAppSettingImpl) then) =
       __$$NsecAppSettingImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String? nsec1});
+  $Res call({String nsec1});
 }
 
 /// @nodoc
@@ -108,13 +116,13 @@ class __$$NsecAppSettingImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? nsec1 = freezed,
+    Object? nsec1 = null,
   }) {
     return _then(_$NsecAppSettingImpl(
-      nsec1: freezed == nsec1
+      nsec1: null == nsec1
           ? _value.nsec1
           : nsec1 // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -122,7 +130,7 @@ class __$$NsecAppSettingImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$NsecAppSettingImpl extends NsecAppSetting {
-  _$NsecAppSettingImpl({this.nsec1, final String? $type})
+  _$NsecAppSettingImpl({required this.nsec1, final String? $type})
       : $type = $type ?? 'nsec',
         super._();
 
@@ -130,7 +138,7 @@ class _$NsecAppSettingImpl extends NsecAppSetting {
       _$$NsecAppSettingImplFromJson(json);
 
   @override
-  final String? nsec1;
+  final String nsec1;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -162,8 +170,9 @@ class _$NsecAppSettingImpl extends NsecAppSetting {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? nsec1) nsec,
-    required TResult Function(String? npub1) npub,
+    required TResult Function(String nsec1) nsec,
+    required TResult Function(String npub1) npub,
+    required TResult Function() empty,
   }) {
     return nsec(nsec1);
   }
@@ -171,8 +180,9 @@ class _$NsecAppSettingImpl extends NsecAppSetting {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String? nsec1)? nsec,
-    TResult? Function(String? npub1)? npub,
+    TResult? Function(String nsec1)? nsec,
+    TResult? Function(String npub1)? npub,
+    TResult? Function()? empty,
   }) {
     return nsec?.call(nsec1);
   }
@@ -180,8 +190,9 @@ class _$NsecAppSettingImpl extends NsecAppSetting {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? nsec1)? nsec,
-    TResult Function(String? npub1)? npub,
+    TResult Function(String nsec1)? nsec,
+    TResult Function(String npub1)? npub,
+    TResult Function()? empty,
     required TResult orElse(),
   }) {
     if (nsec != null) {
@@ -195,6 +206,7 @@ class _$NsecAppSettingImpl extends NsecAppSetting {
   TResult map<TResult extends Object?>({
     required TResult Function(NsecAppSetting value) nsec,
     required TResult Function(NpubAppSetting value) npub,
+    required TResult Function(EmptyAppSetting value) empty,
   }) {
     return nsec(this);
   }
@@ -204,6 +216,7 @@ class _$NsecAppSettingImpl extends NsecAppSetting {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(NsecAppSetting value)? nsec,
     TResult? Function(NpubAppSetting value)? npub,
+    TResult? Function(EmptyAppSetting value)? empty,
   }) {
     return nsec?.call(this);
   }
@@ -213,6 +226,7 @@ class _$NsecAppSettingImpl extends NsecAppSetting {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NsecAppSetting value)? nsec,
     TResult Function(NpubAppSetting value)? npub,
+    TResult Function(EmptyAppSetting value)? empty,
     required TResult orElse(),
   }) {
     if (nsec != null) {
@@ -230,13 +244,13 @@ class _$NsecAppSettingImpl extends NsecAppSetting {
 }
 
 abstract class NsecAppSetting extends AppSetting {
-  factory NsecAppSetting({final String? nsec1}) = _$NsecAppSettingImpl;
+  factory NsecAppSetting({required final String nsec1}) = _$NsecAppSettingImpl;
   NsecAppSetting._() : super._();
 
   factory NsecAppSetting.fromJson(Map<String, dynamic> json) =
       _$NsecAppSettingImpl.fromJson;
 
-  String? get nsec1;
+  String get nsec1;
   @JsonKey(ignore: true)
   _$$NsecAppSettingImplCopyWith<_$NsecAppSettingImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -248,7 +262,7 @@ abstract class _$$NpubAppSettingImplCopyWith<$Res> {
           $Res Function(_$NpubAppSettingImpl) then) =
       __$$NpubAppSettingImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String? npub1});
+  $Res call({String npub1});
 }
 
 /// @nodoc
@@ -262,13 +276,13 @@ class __$$NpubAppSettingImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? npub1 = freezed,
+    Object? npub1 = null,
   }) {
     return _then(_$NpubAppSettingImpl(
-      npub1: freezed == npub1
+      npub1: null == npub1
           ? _value.npub1
           : npub1 // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -276,7 +290,7 @@ class __$$NpubAppSettingImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$NpubAppSettingImpl extends NpubAppSetting {
-  _$NpubAppSettingImpl({this.npub1, final String? $type})
+  _$NpubAppSettingImpl({required this.npub1, final String? $type})
       : $type = $type ?? 'npub',
         super._();
 
@@ -284,7 +298,7 @@ class _$NpubAppSettingImpl extends NpubAppSetting {
       _$$NpubAppSettingImplFromJson(json);
 
   @override
-  final String? npub1;
+  final String npub1;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -316,8 +330,9 @@ class _$NpubAppSettingImpl extends NpubAppSetting {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? nsec1) nsec,
-    required TResult Function(String? npub1) npub,
+    required TResult Function(String nsec1) nsec,
+    required TResult Function(String npub1) npub,
+    required TResult Function() empty,
   }) {
     return npub(npub1);
   }
@@ -325,8 +340,9 @@ class _$NpubAppSettingImpl extends NpubAppSetting {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String? nsec1)? nsec,
-    TResult? Function(String? npub1)? npub,
+    TResult? Function(String nsec1)? nsec,
+    TResult? Function(String npub1)? npub,
+    TResult? Function()? empty,
   }) {
     return npub?.call(npub1);
   }
@@ -334,8 +350,9 @@ class _$NpubAppSettingImpl extends NpubAppSetting {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? nsec1)? nsec,
-    TResult Function(String? npub1)? npub,
+    TResult Function(String nsec1)? nsec,
+    TResult Function(String npub1)? npub,
+    TResult Function()? empty,
     required TResult orElse(),
   }) {
     if (npub != null) {
@@ -349,6 +366,7 @@ class _$NpubAppSettingImpl extends NpubAppSetting {
   TResult map<TResult extends Object?>({
     required TResult Function(NsecAppSetting value) nsec,
     required TResult Function(NpubAppSetting value) npub,
+    required TResult Function(EmptyAppSetting value) empty,
   }) {
     return npub(this);
   }
@@ -358,6 +376,7 @@ class _$NpubAppSettingImpl extends NpubAppSetting {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(NsecAppSetting value)? nsec,
     TResult? Function(NpubAppSetting value)? npub,
+    TResult? Function(EmptyAppSetting value)? empty,
   }) {
     return npub?.call(this);
   }
@@ -367,6 +386,7 @@ class _$NpubAppSettingImpl extends NpubAppSetting {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NsecAppSetting value)? nsec,
     TResult Function(NpubAppSetting value)? npub,
+    TResult Function(EmptyAppSetting value)? empty,
     required TResult orElse(),
   }) {
     if (npub != null) {
@@ -384,14 +404,142 @@ class _$NpubAppSettingImpl extends NpubAppSetting {
 }
 
 abstract class NpubAppSetting extends AppSetting {
-  factory NpubAppSetting({final String? npub1}) = _$NpubAppSettingImpl;
+  factory NpubAppSetting({required final String npub1}) = _$NpubAppSettingImpl;
   NpubAppSetting._() : super._();
 
   factory NpubAppSetting.fromJson(Map<String, dynamic> json) =
       _$NpubAppSettingImpl.fromJson;
 
-  String? get npub1;
+  String get npub1;
   @JsonKey(ignore: true)
   _$$NpubAppSettingImplCopyWith<_$NpubAppSettingImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EmptyAppSettingImplCopyWith<$Res> {
+  factory _$$EmptyAppSettingImplCopyWith(_$EmptyAppSettingImpl value,
+          $Res Function(_$EmptyAppSettingImpl) then) =
+      __$$EmptyAppSettingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$EmptyAppSettingImplCopyWithImpl<$Res>
+    extends _$AppSettingCopyWithImpl<$Res, _$EmptyAppSettingImpl>
+    implements _$$EmptyAppSettingImplCopyWith<$Res> {
+  __$$EmptyAppSettingImplCopyWithImpl(
+      _$EmptyAppSettingImpl _value, $Res Function(_$EmptyAppSettingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$EmptyAppSettingImpl extends EmptyAppSetting {
+  _$EmptyAppSettingImpl({final String? $type})
+      : $type = $type ?? 'empty',
+        super._();
+
+  factory _$EmptyAppSettingImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EmptyAppSettingImplFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'AppSetting.empty()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$EmptyAppSettingImpl);
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String nsec1) nsec,
+    required TResult Function(String npub1) npub,
+    required TResult Function() empty,
+  }) {
+    return empty();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String nsec1)? nsec,
+    TResult? Function(String npub1)? npub,
+    TResult? Function()? empty,
+  }) {
+    return empty?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String nsec1)? nsec,
+    TResult Function(String npub1)? npub,
+    TResult Function()? empty,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NsecAppSetting value) nsec,
+    required TResult Function(NpubAppSetting value) npub,
+    required TResult Function(EmptyAppSetting value) empty,
+  }) {
+    return empty(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NsecAppSetting value)? nsec,
+    TResult? Function(NpubAppSetting value)? npub,
+    TResult? Function(EmptyAppSetting value)? empty,
+  }) {
+    return empty?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NsecAppSetting value)? nsec,
+    TResult Function(NpubAppSetting value)? npub,
+    TResult Function(EmptyAppSetting value)? empty,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$EmptyAppSettingImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class EmptyAppSetting extends AppSetting {
+  factory EmptyAppSetting() = _$EmptyAppSettingImpl;
+  EmptyAppSetting._() : super._();
+
+  factory EmptyAppSetting.fromJson(Map<String, dynamic> json) =
+      _$EmptyAppSettingImpl.fromJson;
 }

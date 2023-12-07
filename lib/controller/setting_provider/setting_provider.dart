@@ -1,8 +1,10 @@
+import 'package:flustr/const.dart';
 import 'package:nostr/nostr.dart';
 import 'package:bip340/bip340.dart' as bip340;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'setting_provider.freezed.dart';
 part 'setting_provider.g.dart';
@@ -15,13 +17,24 @@ part 'setting_provider.g.dart';
 @freezed
 sealed class AppSetting with _$AppSetting {
   factory AppSetting.nsec({
-    String? nsec1,
+    required String nsec1,
   }) = NsecAppSetting;
   factory AppSetting.npub({
-    String? npub1,
+    required String npub1,
   }) = NpubAppSetting;
+  factory AppSetting.empty() = EmptyAppSetting;
 
   const AppSetting._();
+
+  factory AppSetting.fromKey(String key) {
+    if (key.startsWith('nsec1')) {
+      return NsecAppSetting(nsec1: key);
+    }
+    if (key.startsWith('npub1')) {
+      return NpubAppSetting(npub1: key);
+    }
+    return AppSetting.empty();
+  }
 
   String? get getNsec1 => switch (this) {
         NsecAppSetting(nsec1: final key) => key,
@@ -31,7 +44,8 @@ sealed class AppSetting with _$AppSetting {
   String? getNpub1() {
     try {
       final result = switch (this) {
-        NsecAppSetting(nsec1: final String key) => bip340.getPublicKey(key),
+        NsecAppSetting(nsec1: _) =>
+          hexSecKey != null ? bip340.getPublicKey(hexSecKey!) : null,
         NpubAppSetting(npub1: final String key) => key,
         _ => null,
       };
@@ -57,23 +71,34 @@ sealed class AppSetting with _$AppSetting {
 @riverpod
 class SettingNotifier extends _$SettingNotifier {
   @override
-  AppSetting? build() {
-    // 依存先がないので書き変わらない = 初回しか実行されない
-    return null;
+  Future<AppSetting> build() async {
+    final pref = await SharedPreferences.getInstance();
+    final key = pref.getString(PrefKeys.npubOrNsecKey);
+    if (!validateKey(key)) {
+      return AppSetting.empty();
+    }
+    return AppSetting.fromKey(key!);
   }
 
   // npub, nsecに関わらず鍵をセット
   void setKey(String key) {
-    if (key.startsWith('nsec1')) {
-      state = NsecAppSetting(nsec1: key);
+    final valid = validateKey(key);
+    if (!valid) {
+      return;
     }
-    if (key.startsWith('npub1')) {
-      state = NpubAppSetting(npub1: key);
-    }
+    state = AsyncData(AppSetting.fromKey(key));
+
+    // shared preferenceに保存
+    SharedPreferences.getInstance().then((pref) async {
+      await pref.setString(PrefKeys.npubOrNsecKey, key);
+    });
   }
 }
 
-bool validateKey(String input) {
+bool validateKey(String? input) {
+  if (input == null) {
+    return false;
+  }
   try {
     if (!input.startsWith(RegExp(r'npub1|nsec1'))) {
       return false;

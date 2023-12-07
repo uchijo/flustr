@@ -8,7 +8,7 @@ part of 'setting_provider.dart';
 
 _$NsecAppSettingImpl _$$NsecAppSettingImplFromJson(Map<String, dynamic> json) =>
     _$NsecAppSettingImpl(
-      nsec1: json['nsec1'] as String?,
+      nsec1: json['nsec1'] as String,
       $type: json['runtimeType'] as String?,
     );
 
@@ -21,7 +21,7 @@ Map<String, dynamic> _$$NsecAppSettingImplToJson(
 
 _$NpubAppSettingImpl _$$NpubAppSettingImplFromJson(Map<String, dynamic> json) =>
     _$NpubAppSettingImpl(
-      npub1: json['npub1'] as String?,
+      npub1: json['npub1'] as String,
       $type: json['runtimeType'] as String?,
     );
 
@@ -32,16 +32,28 @@ Map<String, dynamic> _$$NpubAppSettingImplToJson(
       'runtimeType': instance.$type,
     };
 
+_$EmptyAppSettingImpl _$$EmptyAppSettingImplFromJson(
+        Map<String, dynamic> json) =>
+    _$EmptyAppSettingImpl(
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$EmptyAppSettingImplToJson(
+        _$EmptyAppSettingImpl instance) =>
+    <String, dynamic>{
+      'runtimeType': instance.$type,
+    };
+
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$settingNotifierHash() => r'3f53f41e586ee5619347f7c1272a18e2981d7c19';
+String _$settingNotifierHash() => r'a7da78381191a8c3da05be9f3cd24dbfd163b720';
 
 /// See also [SettingNotifier].
 @ProviderFor(SettingNotifier)
 final settingNotifierProvider =
-    AutoDisposeNotifierProvider<SettingNotifier, AppSetting?>.internal(
+    AutoDisposeAsyncNotifierProvider<SettingNotifier, AppSetting>.internal(
   SettingNotifier.new,
   name: r'settingNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -51,6 +63,6 @@ final settingNotifierProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$SettingNotifier = AutoDisposeNotifier<AppSetting?>;
+typedef _$SettingNotifier = AutoDisposeAsyncNotifier<AppSetting>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
