@@ -1,4 +1,4 @@
-import 'package:flustr/controller/profile_provider.dart';
+import 'package:flustr/controller/profile_provider/profile_provider.dart';
 import 'package:flustr/view/component/copyable_pubkey.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

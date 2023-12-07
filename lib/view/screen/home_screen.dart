@@ -1,4 +1,5 @@
 import 'package:flustr/view/screen/profile_screen.dart';
+import 'package:flustr/view/screen/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,10 +9,12 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      // 投稿ボタン
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),
       ),
+
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         leading: IconButton(
@@ -30,10 +33,14 @@ class HomeScreen extends ConsumerWidget {
         ),
         actions: [
           IconButton(
-            // navigate to notification page
-            onPressed: () {},
+            // navigate to setting page
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const SettingScreen()),
+              );
+            },
             icon: Icon(
-              Icons.notifications,
+              Icons.settings,
               color: Theme.of(context).primaryIconTheme.color,
             ),
           ),
