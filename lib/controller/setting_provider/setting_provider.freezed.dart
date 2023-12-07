@@ -15,17 +15,59 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 AppSetting _$AppSettingFromJson(Map<String, dynamic> json) {
-  return _AppSetting.fromJson(json);
+  switch (json['runtimeType']) {
+    case 'nsec':
+      return NsecAppSetting.fromJson(json);
+    case 'npub':
+      return NpubAppSetting.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'AppSetting',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
 }
 
 /// @nodoc
 mixin _$AppSetting {
-  String? get secKeyHex => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $AppSettingCopyWith<AppSetting> get copyWith =>
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? nsec1) nsec,
+    required TResult Function(String? npub1) npub,
+  }) =>
       throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String? nsec1)? nsec,
+    TResult? Function(String? npub1)? npub,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? nsec1)? nsec,
+    TResult Function(String? npub1)? npub,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NsecAppSetting value) nsec,
+    required TResult Function(NpubAppSetting value) npub,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NsecAppSetting value)? nsec,
+    TResult? Function(NpubAppSetting value)? npub,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NsecAppSetting value)? nsec,
+    TResult Function(NpubAppSetting value)? npub,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -33,8 +75,6 @@ abstract class $AppSettingCopyWith<$Res> {
   factory $AppSettingCopyWith(
           AppSetting value, $Res Function(AppSetting) then) =
       _$AppSettingCopyWithImpl<$Res, AppSetting>;
-  @useResult
-  $Res call({String? secKeyHex});
 }
 
 /// @nodoc
@@ -46,49 +86,34 @@ class _$AppSettingCopyWithImpl<$Res, $Val extends AppSetting>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? secKeyHex = freezed,
-  }) {
-    return _then(_value.copyWith(
-      secKeyHex: freezed == secKeyHex
-          ? _value.secKeyHex
-          : secKeyHex // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$AppSettingImplCopyWith<$Res>
-    implements $AppSettingCopyWith<$Res> {
-  factory _$$AppSettingImplCopyWith(
-          _$AppSettingImpl value, $Res Function(_$AppSettingImpl) then) =
-      __$$AppSettingImplCopyWithImpl<$Res>;
-  @override
+abstract class _$$NsecAppSettingImplCopyWith<$Res> {
+  factory _$$NsecAppSettingImplCopyWith(_$NsecAppSettingImpl value,
+          $Res Function(_$NsecAppSettingImpl) then) =
+      __$$NsecAppSettingImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String? secKeyHex});
+  $Res call({String? nsec1});
 }
 
 /// @nodoc
-class __$$AppSettingImplCopyWithImpl<$Res>
-    extends _$AppSettingCopyWithImpl<$Res, _$AppSettingImpl>
-    implements _$$AppSettingImplCopyWith<$Res> {
-  __$$AppSettingImplCopyWithImpl(
-      _$AppSettingImpl _value, $Res Function(_$AppSettingImpl) _then)
+class __$$NsecAppSettingImplCopyWithImpl<$Res>
+    extends _$AppSettingCopyWithImpl<$Res, _$NsecAppSettingImpl>
+    implements _$$NsecAppSettingImplCopyWith<$Res> {
+  __$$NsecAppSettingImplCopyWithImpl(
+      _$NsecAppSettingImpl _value, $Res Function(_$NsecAppSettingImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? secKeyHex = freezed,
+    Object? nsec1 = freezed,
   }) {
-    return _then(_$AppSettingImpl(
-      secKeyHex: freezed == secKeyHex
-          ? _value.secKeyHex
-          : secKeyHex // ignore: cast_nullable_to_non_nullable
+    return _then(_$NsecAppSettingImpl(
+      nsec1: freezed == nsec1
+          ? _value.nsec1
+          : nsec1 // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -96,57 +121,277 @@ class __$$AppSettingImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AppSettingImpl implements _AppSetting {
-  _$AppSettingImpl({this.secKeyHex});
+class _$NsecAppSettingImpl extends NsecAppSetting {
+  _$NsecAppSettingImpl({this.nsec1, final String? $type})
+      : $type = $type ?? 'nsec',
+        super._();
 
-  factory _$AppSettingImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AppSettingImplFromJson(json);
+  factory _$NsecAppSettingImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NsecAppSettingImplFromJson(json);
 
   @override
-  final String? secKeyHex;
+  final String? nsec1;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
-    return 'AppSetting(secKeyHex: $secKeyHex)';
+    return 'AppSetting.nsec(nsec1: $nsec1)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AppSettingImpl &&
-            (identical(other.secKeyHex, secKeyHex) ||
-                other.secKeyHex == secKeyHex));
+            other is _$NsecAppSettingImpl &&
+            (identical(other.nsec1, nsec1) || other.nsec1 == nsec1));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, secKeyHex);
+  int get hashCode => Object.hash(runtimeType, nsec1);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AppSettingImplCopyWith<_$AppSettingImpl> get copyWith =>
-      __$$AppSettingImplCopyWithImpl<_$AppSettingImpl>(this, _$identity);
+  _$$NsecAppSettingImplCopyWith<_$NsecAppSettingImpl> get copyWith =>
+      __$$NsecAppSettingImplCopyWithImpl<_$NsecAppSettingImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? nsec1) nsec,
+    required TResult Function(String? npub1) npub,
+  }) {
+    return nsec(nsec1);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String? nsec1)? nsec,
+    TResult? Function(String? npub1)? npub,
+  }) {
+    return nsec?.call(nsec1);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? nsec1)? nsec,
+    TResult Function(String? npub1)? npub,
+    required TResult orElse(),
+  }) {
+    if (nsec != null) {
+      return nsec(nsec1);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NsecAppSetting value) nsec,
+    required TResult Function(NpubAppSetting value) npub,
+  }) {
+    return nsec(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NsecAppSetting value)? nsec,
+    TResult? Function(NpubAppSetting value)? npub,
+  }) {
+    return nsec?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NsecAppSetting value)? nsec,
+    TResult Function(NpubAppSetting value)? npub,
+    required TResult orElse(),
+  }) {
+    if (nsec != null) {
+      return nsec(this);
+    }
+    return orElse();
+  }
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AppSettingImplToJson(
+    return _$$NsecAppSettingImplToJson(
       this,
     );
   }
 }
 
-abstract class _AppSetting implements AppSetting {
-  factory _AppSetting({final String? secKeyHex}) = _$AppSettingImpl;
+abstract class NsecAppSetting extends AppSetting {
+  factory NsecAppSetting({final String? nsec1}) = _$NsecAppSettingImpl;
+  NsecAppSetting._() : super._();
 
-  factory _AppSetting.fromJson(Map<String, dynamic> json) =
-      _$AppSettingImpl.fromJson;
+  factory NsecAppSetting.fromJson(Map<String, dynamic> json) =
+      _$NsecAppSettingImpl.fromJson;
 
-  @override
-  String? get secKeyHex;
-  @override
+  String? get nsec1;
   @JsonKey(ignore: true)
-  _$$AppSettingImplCopyWith<_$AppSettingImpl> get copyWith =>
+  _$$NsecAppSettingImplCopyWith<_$NsecAppSettingImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$NpubAppSettingImplCopyWith<$Res> {
+  factory _$$NpubAppSettingImplCopyWith(_$NpubAppSettingImpl value,
+          $Res Function(_$NpubAppSettingImpl) then) =
+      __$$NpubAppSettingImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? npub1});
+}
+
+/// @nodoc
+class __$$NpubAppSettingImplCopyWithImpl<$Res>
+    extends _$AppSettingCopyWithImpl<$Res, _$NpubAppSettingImpl>
+    implements _$$NpubAppSettingImplCopyWith<$Res> {
+  __$$NpubAppSettingImplCopyWithImpl(
+      _$NpubAppSettingImpl _value, $Res Function(_$NpubAppSettingImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? npub1 = freezed,
+  }) {
+    return _then(_$NpubAppSettingImpl(
+      npub1: freezed == npub1
+          ? _value.npub1
+          : npub1 // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$NpubAppSettingImpl extends NpubAppSetting {
+  _$NpubAppSettingImpl({this.npub1, final String? $type})
+      : $type = $type ?? 'npub',
+        super._();
+
+  factory _$NpubAppSettingImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NpubAppSettingImplFromJson(json);
+
+  @override
+  final String? npub1;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'AppSetting.npub(npub1: $npub1)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NpubAppSettingImpl &&
+            (identical(other.npub1, npub1) || other.npub1 == npub1));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, npub1);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NpubAppSettingImplCopyWith<_$NpubAppSettingImpl> get copyWith =>
+      __$$NpubAppSettingImplCopyWithImpl<_$NpubAppSettingImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? nsec1) nsec,
+    required TResult Function(String? npub1) npub,
+  }) {
+    return npub(npub1);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String? nsec1)? nsec,
+    TResult? Function(String? npub1)? npub,
+  }) {
+    return npub?.call(npub1);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? nsec1)? nsec,
+    TResult Function(String? npub1)? npub,
+    required TResult orElse(),
+  }) {
+    if (npub != null) {
+      return npub(npub1);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NsecAppSetting value) nsec,
+    required TResult Function(NpubAppSetting value) npub,
+  }) {
+    return npub(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NsecAppSetting value)? nsec,
+    TResult? Function(NpubAppSetting value)? npub,
+  }) {
+    return npub?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NsecAppSetting value)? nsec,
+    TResult Function(NpubAppSetting value)? npub,
+    required TResult orElse(),
+  }) {
+    if (npub != null) {
+      return npub(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$NpubAppSettingImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class NpubAppSetting extends AppSetting {
+  factory NpubAppSetting({final String? npub1}) = _$NpubAppSettingImpl;
+  NpubAppSetting._() : super._();
+
+  factory NpubAppSetting.fromJson(Map<String, dynamic> json) =
+      _$NpubAppSettingImpl.fromJson;
+
+  String? get npub1;
+  @JsonKey(ignore: true)
+  _$$NpubAppSettingImplCopyWith<_$NpubAppSettingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
