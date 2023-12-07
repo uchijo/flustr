@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:flustr/controller/connection_pool_provider/connection_pool_provider.dart';
 import 'package:flustr/external/connection_pool.dart';
-import 'package:flustr/external/subscription.dart';
 import 'package:nostr/nostr.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -42,16 +42,14 @@ class ProfileData with _$ProfileData {
 
 @riverpod
 FutureOr<ProfileData> profile(ProfileRef ref, String pubHex) async {
-  // return fetchProfile(pool, pubHex);
-  return ProfileData(
-    name: 'uchijo',
-    picture: 'https://www.uchijo.com/icon.jpg',
-    pubHex: 'e62f27d2814a25171c466d2d7612ad1a066db1362b4e259db5c076f9e6b21cb7',
-    about: 'おいも おいも',
-  );
+  final pool = ref.watch(connectionPoolProvider);
+  if (pool == null) {
+    throw Exception('pool is null');
+  }
+  return fetchProfile(pool, pubHex);
 }
 
-Future<ProfileData?> fetchProfile(ConnectionPool pool, String pubHex) async {
+Future<ProfileData> fetchProfile(ConnectionPool pool, String pubHex) async {
   final events = await pool.getStoredEvent([
     Filter(authors: [pubHex], kinds: [0], limit: 1),
   ]);
@@ -62,5 +60,5 @@ Future<ProfileData?> fetchProfile(ConnectionPool pool, String pubHex) async {
       return ProfileData.fromEvent(events.first);
     }
   } catch (_) {}
-  return null;
+  throw Exception('profile not found.');
 }

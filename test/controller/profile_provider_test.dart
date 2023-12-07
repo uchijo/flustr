@@ -77,35 +77,43 @@ void main() {
       final mockPool = MockConnectionPool();
       when(mockPool.getStoredEvent(any))
           .thenAnswer((_) async => [_validEvent1]);
-      final result = await fetchProfile(mockPool, '');
-      expect(result != null, true);
+      final _ = await fetchProfile(mockPool, '');
     });
     test('イベント取得数が1以外の場合にnullになる1', () async {
       final mockPool = MockConnectionPool();
       when(mockPool.getStoredEvent(any)).thenAnswer(
         (_) async => [_validEvent1, _validEvent2],
       );
-      final result = await fetchProfile(mockPool, '');
-      expect(result == null, true);
+      expect(
+        () async => await fetchProfile(mockPool, ''),
+        throwsA(const TypeMatcher<Object>()),
+      );
     });
     test('イベント取得数が1以外の場合にnullになる2', () async {
       final mockPool = MockConnectionPool();
       when(mockPool.getStoredEvent(any)).thenAnswer(
         (_) async => [],
       );
-      final result = await fetchProfile(mockPool, '');
-      expect(result == null, true);
+      expect(
+        () async => await fetchProfile(mockPool, ''),
+        throwsA(const TypeMatcher<Object>()),
+      );
     });
     test('変なイベントが出てきたときにnullになる', () async {
       final mockPool = MockConnectionPool();
       when(mockPool.getStoredEvent(any)).thenAnswer(
         (_) async => [_invalidEvent1],
       );
-      final result = await fetchProfile(mockPool, '');
-      expect(result == null, true);
+      expect(
+        () async => await fetchProfile(mockPool, ''),
+        throwsA(const TypeMatcher<Object>()),
+      );
     });
     test('ちゃんとした引数が渡されてることを確認', () async {
       final mockPool = MockConnectionPool();
+      when(mockPool.getStoredEvent(any)).thenAnswer(
+        (_) async => [_validEvent1],
+      );
       final _ = await fetchProfile(mockPool, 'simple_npub');
       final captured = verify(mockPool.getStoredEvent(captureAny)).captured;
       expect(captured.first.length, 1);

@@ -35,8 +35,14 @@ class ProfileScreen extends ConsumerWidget {
           AsyncLoading() => const Center(
               child: CircularProgressIndicator(),
             ),
-          AsyncError(error: final _, stackTrace: final _) => const Center(
-              child: Text('Oops! something went wrong'),
+          AsyncError(error: final error, stackTrace: final _) => Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Oops! something went wrong'),
+                  Text(error.toString()),
+                ],
+              ),
             ),
           AsyncValue() => const Center(
               child: Text('Oops! something went wrong'),
