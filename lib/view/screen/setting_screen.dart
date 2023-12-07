@@ -6,10 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // テキストフィールドの内容を保持しておく
 String _textFieldContent = '';
 
-final _keyVisibleProvider = StateProvider<bool>((ref) {
-  return false;
-});
-
 class SettingScreen extends ConsumerWidget {
   const SettingScreen({Key? key}) : super(key: key);
 
@@ -59,14 +55,14 @@ class SettingScreen extends ConsumerWidget {
 
                 const SizedBox(height: 30),
 
-                // 現在の鍵を表示
+                // 現在の鍵を表示（保存されていれば）
                 if (currentKey != null) _CurrentKey(currentKey: currentKey),
 
                 // 鍵入力
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Section(
-                    title: 'update key',
+                    title: 'save/update key',
                     content: [
                       TextField(
                         onChanged: (value) {
@@ -77,9 +73,10 @@ class SettingScreen extends ConsumerWidget {
                       Center(
                         child: ElevatedButton(
                           onPressed: () {
-                            final valid = validateKey(_textFieldContent);
+                            final trimmed = _textFieldContent.trim();
+                            final valid = validateKey(trimmed);
                             if (valid) {
-                              settingsController.setKey(_textFieldContent);
+                              settingsController.setKey(trimmed);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -108,6 +105,13 @@ class SettingScreen extends ConsumerWidget {
   }
 }
 
+// _CurrentKey widgetで使う
+final _keyVisibleProvider = StateProvider.autoDispose<bool>((ref) {
+  return false;
+});
+
+// 渡されたキーを表示する
+// nsec1とか見られたくないし、デフォルトではマスクしておく
 class _CurrentKey extends ConsumerWidget {
   const _CurrentKey({Key? key, required this.currentKey}) : super(key: key);
 
