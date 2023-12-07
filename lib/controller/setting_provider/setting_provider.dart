@@ -72,3 +72,21 @@ class SettingNotifier extends _$SettingNotifier {
     }
   }
 }
+
+bool validateKey(String input) {
+  try {
+    if (!input.startsWith(RegExp(r'npub1|nsec1'))) {
+      return false;
+    }
+    if (input.startsWith('nsec1')) {
+      final hex = Nip19.decodePrivkey(input);
+      final _ = bip340.getPublicKey(hex);
+    }
+    if (input.startsWith('npub1')) {
+      final _ = Nip19.decodePubkey(input);
+    }
+    return true;
+  } catch (_) {
+    return false;
+  }
+}

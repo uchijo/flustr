@@ -40,7 +40,14 @@ class SettingScreen extends ConsumerWidget {
                 const SizedBox(width: 5),
                 ElevatedButton(
                   onPressed: () {
-                    settingsController.setKey(_textFieldContent);
+                    final valid = validateKey(_textFieldContent);
+                    if (valid) {
+                      settingsController.setKey(_textFieldContent);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('invalid key was given.')),
+                      );
+                    }
                   },
                   child: const Text('save'),
                 ),
