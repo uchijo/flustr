@@ -28,11 +28,19 @@ sealed class AppSetting with _$AppSetting {
         _ => null,
       };
 
-  String? get getNpub1 => switch (this) {
+  String? getNpub1() {
+    try {
+      final result = switch (this) {
         NsecAppSetting(nsec1: final String key) => bip340.getPublicKey(key),
         NpubAppSetting(npub1: final String key) => key,
         _ => null,
       };
+      return result;
+    } catch (_) {
+      // 何か問題があればnullを返す
+      return null;
+    }
+  }
 
   String? get hexSecKey => switch (this) {
         NsecAppSetting(nsec1: final String key) => Nip19.decodePrivkey(key),
@@ -40,7 +48,7 @@ sealed class AppSetting with _$AppSetting {
       };
 
   String? get hexPubKey =>
-      getNpub1 != null ? Nip19.decodePubkey(getNpub1!) : null;
+      getNpub1() != null ? Nip19.decodePubkey(getNpub1()!) : null;
 
   factory AppSetting.fromJson(Map<String, dynamic> json) =>
       _$AppSettingFromJson(json);
