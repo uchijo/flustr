@@ -20,8 +20,8 @@ ProfileData _$ProfileDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProfileData {
-  String get username => throw _privateConstructorUsedError;
-  String get icon => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get picture => throw _privateConstructorUsedError;
   String get about => throw _privateConstructorUsedError;
   String get pubHex => throw _privateConstructorUsedError;
 
@@ -37,7 +37,7 @@ abstract class $ProfileDataCopyWith<$Res> {
           ProfileData value, $Res Function(ProfileData) then) =
       _$ProfileDataCopyWithImpl<$Res, ProfileData>;
   @useResult
-  $Res call({String username, String icon, String about, String pubHex});
+  $Res call({String name, String picture, String about, String pubHex});
 }
 
 /// @nodoc
@@ -53,19 +53,19 @@ class _$ProfileDataCopyWithImpl<$Res, $Val extends ProfileData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? icon = null,
+    Object? name = null,
+    Object? picture = null,
     Object? about = null,
     Object? pubHex = null,
   }) {
     return _then(_value.copyWith(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      icon: null == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
+      picture: null == picture
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
               as String,
       about: null == about
           ? _value.about
@@ -87,7 +87,7 @@ abstract class _$$ProfileDataImplCopyWith<$Res>
       __$$ProfileDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, String icon, String about, String pubHex});
+  $Res call({String name, String picture, String about, String pubHex});
 }
 
 /// @nodoc
@@ -101,19 +101,19 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? icon = null,
+    Object? name = null,
+    Object? picture = null,
     Object? about = null,
     Object? pubHex = null,
   }) {
     return _then(_$ProfileDataImpl(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      icon: null == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
+      picture: null == picture
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
               as String,
       about: null == about
           ? _value.about
@@ -129,20 +129,21 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ProfileDataImpl implements _ProfileData {
+class _$ProfileDataImpl extends _ProfileData {
   _$ProfileDataImpl(
-      {required this.username,
-      required this.icon,
+      {required this.name,
+      required this.picture,
       required this.about,
-      required this.pubHex});
+      required this.pubHex})
+      : super._();
 
   factory _$ProfileDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileDataImplFromJson(json);
 
   @override
-  final String username;
+  final String name;
   @override
-  final String icon;
+  final String picture;
   @override
   final String about;
   @override
@@ -150,7 +151,7 @@ class _$ProfileDataImpl implements _ProfileData {
 
   @override
   String toString() {
-    return 'ProfileData(username: $username, icon: $icon, about: $about, pubHex: $pubHex)';
+    return 'ProfileData(name: $name, picture: $picture, about: $about, pubHex: $pubHex)';
   }
 
   @override
@@ -158,16 +159,15 @@ class _$ProfileDataImpl implements _ProfileData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProfileDataImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.picture, picture) || other.picture == picture) &&
             (identical(other.about, about) || other.about == about) &&
             (identical(other.pubHex, pubHex) || other.pubHex == pubHex));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, icon, about, pubHex);
+  int get hashCode => Object.hash(runtimeType, name, picture, about, pubHex);
 
   @JsonKey(ignore: true)
   @override
@@ -183,20 +183,21 @@ class _$ProfileDataImpl implements _ProfileData {
   }
 }
 
-abstract class _ProfileData implements ProfileData {
+abstract class _ProfileData extends ProfileData {
   factory _ProfileData(
-      {required final String username,
-      required final String icon,
+      {required final String name,
+      required final String picture,
       required final String about,
       required final String pubHex}) = _$ProfileDataImpl;
+  _ProfileData._() : super._();
 
   factory _ProfileData.fromJson(Map<String, dynamic> json) =
       _$ProfileDataImpl.fromJson;
 
   @override
-  String get username;
+  String get name;
   @override
-  String get icon;
+  String get picture;
   @override
   String get about;
   @override

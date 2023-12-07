@@ -22,7 +22,7 @@ class HomeScreen extends ConsumerWidget {
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => const ProfileScreen(npub: 'hoge'),
+                builder: (_) => const ProfileScreen(pubHex: 'hoge'),
               ),
             );
           },

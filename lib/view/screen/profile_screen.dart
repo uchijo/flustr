@@ -6,14 +6,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({
     Key? key,
-    required this.npub,
+    required this.pubHex,
   }) : super(key: key);
 
-  final String npub;
+  final String pubHex;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profile = ref.watch(profileProvider);
+    final profile = ref.watch(profileProvider(pubHex));
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -71,7 +71,7 @@ class ProfileHeader extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: Image.network(
-            profile.icon,
+            profile.picture,
           ),
         ),
 
@@ -84,7 +84,7 @@ class ProfileHeader extends StatelessWidget {
             children: [
               // ユーザ名
               Text(
-                profile.username,
+                profile.name,
                 style: const TextStyle(
                   fontWeight: FontWeight.normal,
                   overflow: TextOverflow.ellipsis,
