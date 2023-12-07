@@ -1,3 +1,4 @@
+import 'package:flustr/controller/setting_provider/setting_provider.dart';
 import 'package:flustr/view/screen/profile_screen.dart';
 import 'package:flustr/view/screen/setting_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,10 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pubHex = switch (ref.watch(settingNotifierProvider)) {
+      AsyncData(:final value) => value.hexPubKey,
+      _ => null,
+    };
     return Scaffold(
       // 投稿ボタン
       floatingActionButton: FloatingActionButton(
@@ -20,11 +25,19 @@ class HomeScreen extends ConsumerWidget {
         leading: IconButton(
           // navigate to my profile
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => const ProfileScreen(pubHex: 'hoge'),
-              ),
-            );
+            if (pubHex != null) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => ProfileScreen(pubHex: pubHex),
+                ),
+              );
+            } else {
+              showDialog(
+                context: context,
+                builder: (ctx) =>
+                    const Text('please enter key in setting screen.'),
+              );
+            }
           },
           icon: Icon(
             Icons.person,

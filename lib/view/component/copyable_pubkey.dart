@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nostr/nostr.dart';
 
 class CopyablePubkey extends StatelessWidget {
   const CopyablePubkey({super.key, required this.pubkey});
@@ -39,7 +40,7 @@ class CopyablePubkey extends StatelessWidget {
           const SizedBox(width: 4),
           Flexible(
             child: Text(
-              pubkey,
+              Nip19.encodePubkey(pubkey),
               overflow: TextOverflow.ellipsis,
             ),
           ),
