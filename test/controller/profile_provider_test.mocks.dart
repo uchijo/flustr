@@ -3,11 +3,11 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
-import 'dart:io' as _i4;
+import 'dart:async' as _i4;
+import 'dart:io' as _i5;
 
-import 'package:flustr/external/connection_pool.dart' as _i2;
-import 'package:flustr/external/stream_wrapper.dart' as _i5;
+import 'package:flustr/external/connection_pool.dart' as _i3;
+import 'package:flustr/external/stream_wrapper.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:nostr/nostr.dart' as _i6;
 
@@ -24,19 +24,30 @@ import 'package:nostr/nostr.dart' as _i6;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeStreamAggregator_0 extends _i1.SmartFake
+    implements _i2.StreamAggregator {
+  _FakeStreamAggregator_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [ConnectionPool].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockConnectionPool extends _i1.Mock implements _i2.ConnectionPool {
+class MockConnectionPool extends _i1.Mock implements _i3.ConnectionPool {
   @override
-  _i3.Future<void> get connected => (super.noSuchMethod(
+  _i4.Future<void> get connected => (super.noSuchMethod(
         Invocation.getter(#connected),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
-  set connected(_i3.Future<void>? _connected) => super.noSuchMethod(
+  set connected(_i4.Future<void>? _connected) => super.noSuchMethod(
         Invocation.setter(
           #connected,
           _connected,
@@ -45,14 +56,14 @@ class MockConnectionPool extends _i1.Mock implements _i2.ConnectionPool {
       );
 
   @override
-  List<_i4.WebSocket> get relays => (super.noSuchMethod(
+  List<_i5.WebSocket> get relays => (super.noSuchMethod(
         Invocation.getter(#relays),
-        returnValue: <_i4.WebSocket>[],
-        returnValueForMissingStub: <_i4.WebSocket>[],
-      ) as List<_i4.WebSocket>);
+        returnValue: <_i5.WebSocket>[],
+        returnValueForMissingStub: <_i5.WebSocket>[],
+      ) as List<_i5.WebSocket>);
 
   @override
-  set relays(List<_i4.WebSocket>? _relays) => super.noSuchMethod(
+  set relays(List<_i5.WebSocket>? _relays) => super.noSuchMethod(
         Invocation.setter(
           #relays,
           _relays,
@@ -61,14 +72,14 @@ class MockConnectionPool extends _i1.Mock implements _i2.ConnectionPool {
       );
 
   @override
-  Map<String, _i5.StreamWrapper> get subscriptions => (super.noSuchMethod(
+  Map<String, _i2.StreamAggregator> get subscriptions => (super.noSuchMethod(
         Invocation.getter(#subscriptions),
-        returnValue: <String, _i5.StreamWrapper>{},
-        returnValueForMissingStub: <String, _i5.StreamWrapper>{},
-      ) as Map<String, _i5.StreamWrapper>);
+        returnValue: <String, _i2.StreamAggregator>{},
+        returnValueForMissingStub: <String, _i2.StreamAggregator>{},
+      ) as Map<String, _i2.StreamAggregator>);
 
   @override
-  set subscriptions(Map<String, _i5.StreamWrapper>? _subscriptions) =>
+  set subscriptions(Map<String, _i2.StreamAggregator>? _subscriptions) =>
       super.noSuchMethod(
         Invocation.setter(
           #subscriptions,
@@ -78,14 +89,45 @@ class MockConnectionPool extends _i1.Mock implements _i2.ConnectionPool {
       );
 
   @override
-  _i3.Future<List<_i6.Event>> getStoredEvent(List<_i6.Filter>? filters) =>
+  _i4.Future<List<_i6.Event>> getStoredEvent(List<_i6.Filter>? filters) =>
       (super.noSuchMethod(
         Invocation.method(
           #getStoredEvent,
           [filters],
         ),
-        returnValue: _i3.Future<List<_i6.Event>>.value(<_i6.Event>[]),
+        returnValue: _i4.Future<List<_i6.Event>>.value(<_i6.Event>[]),
         returnValueForMissingStub:
-            _i3.Future<List<_i6.Event>>.value(<_i6.Event>[]),
-      ) as _i3.Future<List<_i6.Event>>);
+            _i4.Future<List<_i6.Event>>.value(<_i6.Event>[]),
+      ) as _i4.Future<List<_i6.Event>>);
+
+  @override
+  _i4.Future<(List<_i6.Event>, _i2.StreamAggregator)> getEventStream(
+          List<_i6.Filter>? filters) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getEventStream,
+          [filters],
+        ),
+        returnValue: _i4.Future<(List<_i6.Event>, _i2.StreamAggregator)>.value((
+          <_i6.Event>[],
+          _FakeStreamAggregator_0(
+            this,
+            Invocation.method(
+              #getEventStream,
+              [filters],
+            ),
+          )
+        )),
+        returnValueForMissingStub:
+            _i4.Future<(List<_i6.Event>, _i2.StreamAggregator)>.value((
+          <_i6.Event>[],
+          _FakeStreamAggregator_0(
+            this,
+            Invocation.method(
+              #getEventStream,
+              [filters],
+            ),
+          )
+        )),
+      ) as _i4.Future<(List<_i6.Event>, _i2.StreamAggregator)>);
 }

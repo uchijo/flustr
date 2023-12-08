@@ -10,7 +10,7 @@ class ConnectionPool {
     final completer = Completer<void>();
     connected = completer.future;
 
-    subscriptions = <String, StreamWrapper>{};
+    subscriptions = <String, StreamAggregator>{};
     final socketFutures = <Future<WebSocket>>[];
     for (final url in _urls) {
       socketFutures.add(WebSocket.connect(url));
@@ -31,7 +31,7 @@ class ConnectionPool {
   late final List<WebSocket> relays;
 
   // subscriptionに対応する出力先stream
-  late final Map<String, StreamWrapper> subscriptions;
+  late final Map<String, StreamAggregator> subscriptions;
 
   Future<List<Event>> getStoredEvent(List<Filter> filters) async {
     // websocket接続前に呼ばれたら待つ
@@ -59,8 +59,10 @@ class ConnectionPool {
     return events;
   }
 
-  // Future<(List<Event>, StreamWrapper)> getStoredAndUpdate(
-  //     List<Filter> filters) async {
-  //   return (<Event>[], StreamWrapper(() {}));
-  // }
+  // fixme: 厳密には全てのイベントは拾えない
+  // sinceがnowなリクエストとEOSEまで持ってくるリクエストが分離しているため
+  Future<(List<Event>, StreamAggregator)> getEventStream(
+      List<Filter> filters) async {
+    return (<Event>[], StreamAggregator());
+  }
 }
