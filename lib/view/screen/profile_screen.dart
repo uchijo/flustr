@@ -1,4 +1,5 @@
 import 'package:flustr/controller/profile_provider/profile_provider.dart';
+import 'package:flustr/controller/user_posts_notifier/user_posts_notifier.dart';
 import 'package:flustr/view/component/copyable_pubkey.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +15,7 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(profileProvider(pubHex));
+    final rawPosts = ref.watch(UserPostsNotifierProvider(pubHex));
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -24,10 +26,15 @@ class ProfileScreen extends ConsumerWidget {
                 ProfileHeader(profile: profile),
 
                 // 投稿を出すところ
-                for (var i = 0; i < 30; i++) ...const [
-                  Text('hogehoge'),
-                  SizedBox(height: 30),
-                ]
+                ...switch (rawPosts) {
+                  AsyncData(value: final posts) =>
+                    posts.map((e) => Text(e.content)),
+                  AsyncError(:final error, :final stackTrace) => [
+                      Text(error.toString()),
+                      Text(stackTrace.toString()),
+                    ],
+                  _ => [],
+                }
               ],
             ),
 

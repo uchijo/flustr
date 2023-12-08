@@ -6,7 +6,7 @@ import 'package:nostr/nostr.dart';
 // eoseまで一つのリレーから値を受け取るオブジェクト
 Future<List<Event>> summariseUntilEose(
   List<Filter> filters,
-  WebSocket socket, {
+  (WebSocket, Stream<dynamic>) socket, {
   Duration timeout = const Duration(milliseconds: 500),
 }) async {
   final subscriptionId = generate64RandomHexChars().substring(0, 32);
@@ -15,7 +15,7 @@ Future<List<Event>> summariseUntilEose(
   final List<Event> events = <Event>[];
 
   // 聞く準備
-  final sub = socket.listen((rawMessage) {
+  final sub = socket.$2.listen((rawMessage) {
     final message = Message.deserialize(rawMessage);
     switch (message.messageType) {
       case MessageType.event:
@@ -43,12 +43,12 @@ Future<List<Event>> summariseUntilEose(
 
   // 通信開始
   final request = Request(subscriptionId, filters);
-  socket.add(request.serialize());
+  socket.$1.add(request.serialize());
 
   // タイムアウトかeoseが来るまで待つ
   await Future.any([gotEose.future, Future.delayed(timeout)]);
   sub.cancel(); // listenやめる
-  socket.add(Close(subscriptionId).serialize()); // subscribeやめる
+  socket.$1.add(Close(subscriptionId).serialize()); // subscribeやめる
 
   // eoseじゃない場合は途中まで来てたのも破棄
   return isEose ? events : [];

@@ -56,14 +56,15 @@ class MockConnectionPool extends _i1.Mock implements _i3.ConnectionPool {
       );
 
   @override
-  List<_i5.WebSocket> get relays => (super.noSuchMethod(
+  List<(_i5.WebSocket, _i4.Stream<dynamic>)> get relays => (super.noSuchMethod(
         Invocation.getter(#relays),
-        returnValue: <_i5.WebSocket>[],
-        returnValueForMissingStub: <_i5.WebSocket>[],
-      ) as List<_i5.WebSocket>);
+        returnValue: <(_i5.WebSocket, _i4.Stream<dynamic>)>[],
+        returnValueForMissingStub: <(_i5.WebSocket, _i4.Stream<dynamic>)>[],
+      ) as List<(_i5.WebSocket, _i4.Stream<dynamic>)>);
 
   @override
-  set relays(List<_i5.WebSocket>? _relays) => super.noSuchMethod(
+  set relays(List<(_i5.WebSocket, _i4.Stream<dynamic>)>? _relays) =>
+      super.noSuchMethod(
         Invocation.setter(
           #relays,
           _relays,
@@ -89,11 +90,15 @@ class MockConnectionPool extends _i1.Mock implements _i3.ConnectionPool {
       );
 
   @override
-  _i4.Future<List<_i6.Event>> getStoredEvent(List<_i6.Filter>? filters) =>
+  _i4.Future<List<_i6.Event>> getStoredEvent(
+    List<_i6.Filter>? filters, {
+    Duration? timeout = const Duration(milliseconds: 500),
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #getStoredEvent,
           [filters],
+          {#timeout: timeout},
         ),
         returnValue: _i4.Future<List<_i6.Event>>.value(<_i6.Event>[]),
         returnValueForMissingStub:

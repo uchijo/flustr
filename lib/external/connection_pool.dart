@@ -17,7 +17,8 @@ class ConnectionPool {
     }
     Future.wait(socketFutures).then(
       (sockets) async {
-        relays = sockets;
+        final tmp = sockets.map((e) => (e, e.asBroadcastStream())).toList();
+        relays = tmp;
         completer.complete();
       },
     );
@@ -28,19 +29,22 @@ class ConnectionPool {
 
   // イベントが降ってくるリレー
   final List<String> _urls;
-  late final List<WebSocket> relays;
+  late final List<(WebSocket, Stream<dynamic>)> relays;
 
   // subscriptionに対応する出力先stream
   late final Map<String, StreamAggregator> subscriptions;
 
-  Future<List<Event>> getStoredEvent(List<Filter> filters) async {
+  Future<List<Event>> getStoredEvent(
+    List<Filter> filters, {
+    Duration timeout = const Duration(milliseconds: 500),
+  }) async {
     // websocket接続前に呼ばれたら待つ
     await connected;
 
     // 全部のソケットでeoseまで待つ
     final subs = <Future<List<Event>>>[];
     for (final relay in relays) {
-      subs.add(summariseUntilEose(filters, relay));
+      subs.add(summariseUntilEose(filters, relay, timeout: timeout));
     }
     final overlappingEventsList = await Future.wait(subs);
 
@@ -75,7 +79,7 @@ class ConnectionPool {
 
       // prepare for listen
       bool eose = false;
-      final sub = relay.listen((rawMessage) {
+      final sub = relay.$2.listen((rawMessage) {
         final message = Message.deserialize(rawMessage);
         switch (message.messageType) {
           case MessageType.eose:
@@ -101,9 +105,9 @@ class ConnectionPool {
 
       // subscription stuff
       final req = Request(subId, filters);
-      relay.add(req.serialize());
+      relay.$1.add(req.serialize());
       closers.add(() {
-        relay.add(Close(subId).serialize());
+        relay.$1.add(Close(subId).serialize());
       });
     }
 

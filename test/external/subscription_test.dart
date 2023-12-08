@@ -53,7 +53,10 @@ Future<void> main() async {
           kinds: [0],
           limit: 2,
         ),
-      ], socket, timeout: const Duration(seconds: 4));
+      ], (
+        socket,
+        socket.asBroadcastStream()
+      ), timeout: const Duration(seconds: 4));
 
       // サーバ側でcloseを受け取れるように待つ
       await Future.delayed(const Duration(seconds: 1));
@@ -79,7 +82,7 @@ Future<void> main() async {
             limit: 2,
           ),
         ],
-        socket,
+        (socket, socket.asBroadcastStream()),
       );
 
       // サーバ側の処理を少し待つ
@@ -119,7 +122,10 @@ Future<void> main() async {
           kinds: [0],
           limit: 2,
         ),
-      ], socket, timeout: const Duration(seconds: 4));
+      ], (
+        socket,
+        socket.asBroadcastStream()
+      ), timeout: const Duration(seconds: 4));
 
       // サーバ側でcloseを受け取れるように待つ
       await Future.delayed(const Duration(seconds: 1));
@@ -153,7 +159,10 @@ Future<void> main() async {
           kinds: [0],
           limit: 2,
         ),
-      ], socket, timeout: const Duration(seconds: 4));
+      ], (
+        socket,
+        socket.asBroadcastStream()
+      ), timeout: const Duration(seconds: 4));
 
       // サーバ側でcloseを受け取れるように待つ
       await Future.delayed(const Duration(seconds: 1));
