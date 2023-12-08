@@ -71,16 +71,22 @@ class ConnectionPool {
     final cancelers = <void Function()>[];
 
     for (final relay in relays) {
+      final subId = generate64RandomHexChars().substring(0, 32);
+
       // prepare for listen
       bool eose = false;
       final sub = relay.listen((rawMessage) {
         final message = Message.deserialize(rawMessage);
         switch (message.messageType) {
           case MessageType.eose:
-            eose = true;
+            if ((message.message as Eose).subscriptionId == subId) {
+              eose = true;
+            }
             break;
           case MessageType.event:
-            if (eose && message.message is Event) {
+            if (eose &&
+                message.message is Event &&
+                (message.message as Event).subscriptionId == subId) {
               aggregator.addEvent(message.messageType as Event);
             }
             break;
@@ -94,7 +100,6 @@ class ConnectionPool {
       });
 
       // subscription stuff
-      final subId = generate64RandomHexChars().substring(0, 32);
       final req = Request(subId, filters);
       relay.add(req.serialize());
       closers.add(() {
