@@ -1,6 +1,7 @@
 import 'package:flustr/controller/profile_provider/profile_provider.dart';
 import 'package:flustr/controller/user_posts_notifier/user_posts_notifier.dart';
 import 'package:flustr/view/component/copyable_pubkey.dart';
+import 'package:flustr/view/component/event_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,42 +20,46 @@ class ProfileScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-        child: switch (profile) {
-          AsyncData(value: final profile) => ListView(
-              children: [
-                // app bar周り
-                ProfileHeader(profile: profile),
-
-                // 投稿を出すところ
-                ...switch (rawPosts) {
-                  AsyncData(value: final posts) =>
-                    posts.map((e) => Text(e.content)),
-                  AsyncError(:final error, :final stackTrace) => [
-                      Text(error.toString()),
-                      Text(stackTrace.toString()),
-                    ],
-                  _ => [],
-                }
-              ],
-            ),
-
-          // 読み込み中
-          AsyncLoading() => const Center(
-              child: CircularProgressIndicator(),
-            ),
-          AsyncError(error: final error, stackTrace: final _) => Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: switch (profile) {
+            AsyncData(value: final profile) => ListView(
                 children: [
-                  const Text('Oops! something went wrong'),
-                  Text(error.toString()),
+                  // app bar周り
+                  ProfileHeader(profile: profile),
+
+                  // 投稿を出すところ
+                  ...switch (rawPosts) {
+                    AsyncData(value: final posts) =>
+                      posts.map((e) => EventView(event: e)),
+                    AsyncError(:final error, :final stackTrace) => [
+                        Text(error.toString()),
+                        Text(stackTrace.toString()),
+                      ],
+                    AsyncLoading() => [const LinearProgressIndicator()],
+                    _ => [],
+                  }
                 ],
               ),
-            ),
-          AsyncValue() => const Center(
-              child: Text('Oops! something went wrong'),
-            ),
-        },
+
+            // 読み込み中
+            AsyncLoading() => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            AsyncError(error: final error, stackTrace: final _) => Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('Oops! something went wrong'),
+                    Text(error.toString()),
+                  ],
+                ),
+              ),
+            AsyncValue() => const Center(
+                child: Text('Oops! something went wrong'),
+              ),
+          },
+        ),
       ),
     );
   }
