@@ -101,33 +101,25 @@ class MockConnectionPool extends _i1.Mock implements _i3.ConnectionPool {
       ) as _i4.Future<List<_i6.Event>>);
 
   @override
-  _i4.Future<(List<_i6.Event>, _i2.StreamAggregator)> getEventStream(
-          List<_i6.Filter>? filters) =>
+  _i2.StreamAggregator getEventStreamAfterEose(List<_i6.Filter>? filters) =>
       (super.noSuchMethod(
         Invocation.method(
-          #getEventStream,
+          #getEventStreamAfterEose,
           [filters],
         ),
-        returnValue: _i4.Future<(List<_i6.Event>, _i2.StreamAggregator)>.value((
-          <_i6.Event>[],
-          _FakeStreamAggregator_0(
-            this,
-            Invocation.method(
-              #getEventStream,
-              [filters],
-            ),
-          )
-        )),
-        returnValueForMissingStub:
-            _i4.Future<(List<_i6.Event>, _i2.StreamAggregator)>.value((
-          <_i6.Event>[],
-          _FakeStreamAggregator_0(
-            this,
-            Invocation.method(
-              #getEventStream,
-              [filters],
-            ),
-          )
-        )),
-      ) as _i4.Future<(List<_i6.Event>, _i2.StreamAggregator)>);
+        returnValue: _FakeStreamAggregator_0(
+          this,
+          Invocation.method(
+            #getEventStreamAfterEose,
+            [filters],
+          ),
+        ),
+        returnValueForMissingStub: _FakeStreamAggregator_0(
+          this,
+          Invocation.method(
+            #getEventStreamAfterEose,
+            [filters],
+          ),
+        ),
+      ) as _i2.StreamAggregator);
 }

@@ -59,10 +59,58 @@ class ConnectionPool {
     return events;
   }
 
-  // fixme: 厳密には全てのイベントは拾えない
-  // sinceがnowなリクエストとEOSEまで持ってくるリクエストが分離しているため
-  Future<(List<Event>, StreamAggregator)> getEventStream(
-      List<Filter> filters) async {
-    return (<Event>[], StreamAggregator());
+  // eose後の,複数relayからのstreamをよしなにまとめるStreamを返す
+  StreamAggregator getEventStreamAfterEose(
+    List<Filter> filters,
+  ) {
+    final aggregator = StreamAggregator();
+
+    // list of functions that closes each subscription by sending Close(subId)
+    final closers = <void Function()>[];
+    // list of functions that cancels each listens on websockets
+    final cancelers = <void Function()>[];
+
+    for (final relay in relays) {
+      // prepare for listen
+      bool eose = false;
+      final sub = relay.listen((rawMessage) {
+        final message = Message.deserialize(rawMessage);
+        switch (message.messageType) {
+          case MessageType.eose:
+            eose = true;
+            break;
+          case MessageType.event:
+            if (eose && message.message is Event) {
+              aggregator.addEvent(message.messageType as Event);
+            }
+            break;
+          default:
+            // do nothing
+            break;
+        }
+      });
+      cancelers.add(() {
+        sub.cancel();
+      });
+
+      // subscription stuff
+      final subId = generate64RandomHexChars().substring(0, 32);
+      final req = Request(subId, filters);
+      relay.add(req.serialize());
+      closers.add(() {
+        relay.add(Close(subId).serialize());
+      });
+    }
+
+    aggregator.cleanUp = () {
+      for (final fun in cancelers) {
+        fun();
+      }
+      for (final fun in closers) {
+        fun();
+      }
+    };
+
+    return aggregator;
   }
 }
