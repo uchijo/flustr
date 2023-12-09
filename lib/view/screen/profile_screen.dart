@@ -5,6 +5,8 @@ import 'package:flustr/view/component/event_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+final _loadButtonLoadingProvider = StateProvider((ref) => false);
+
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({
     Key? key,
@@ -17,6 +19,9 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(profileProvider(pubHex));
     final rawPosts = ref.watch(UserPostsNotifierProvider(pubHex));
+    final rawPostsController =
+        ref.watch(UserPostsNotifierProvider(pubHex).notifier);
+    final loadingOld = ref.watch(_loadButtonLoadingProvider);
 
     return Scaffold(
       appBar: AppBar(),
@@ -39,7 +44,22 @@ class ProfileScreen extends ConsumerWidget {
                       ],
                     AsyncLoading() => [const LinearProgressIndicator()],
                     _ => [],
-                  }
+                  },
+
+                  TextButton(
+                    onPressed: loadingOld
+                        ? null
+                        : () async {
+                            ref
+                                .read(_loadButtonLoadingProvider.notifier)
+                                .state = true;
+                            await rawPostsController.loadOlderPosts();
+                            ref
+                                .read(_loadButtonLoadingProvider.notifier)
+                                .state = false;
+                          },
+                    child: const Text('load more'),
+                  ),
                 ],
               ),
 

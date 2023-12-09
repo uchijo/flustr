@@ -47,4 +47,47 @@ class UserPostsNotifier extends _$UserPostsNotifier {
         .reversed
         .toList();
   }
+
+  bool _loading = false;
+
+  Future<void> loadOlderPosts() async {
+    if (_loading) return;
+    _loading = true;
+    final pool = ref.read(connectionPoolProvider);
+    final currentPosts = switch (state) {
+      AsyncData(:final value) => value,
+      _ => null,
+    };
+    if (currentPosts == null || pool == null) {
+      return;
+    }
+
+    final last = currentPosts.last;
+    final oldEvents = await pool.getStoredEvent(
+      [
+        Filter(
+          authors: [pubHex],
+          kinds: [1],
+          limit: 30,
+          until: last.createdAt + 1,
+        )
+      ],
+      timeout: const Duration(seconds: 3),
+    );
+
+    final newEventsWithDups = [...currentPosts, ...oldEvents];
+
+    final seen = <String>{};
+    final newEvents = <Event>[];
+    for (final event in newEventsWithDups) {
+      if (seen.contains(event.id)) {
+        continue;
+      }
+      seen.add(event.id);
+      newEvents.add(event);
+    }
+
+    state = AsyncData(newEvents);
+    _loading = false;
+  }
 }
