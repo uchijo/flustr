@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_posts_notifier.dart';
+part of 'follow_list_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userPostsNotifierHash() => r'4b7a6bf00ad1ac9d56b06ba9cc2c0d2a7978adb7';
+String _$followListHash() => r'a4f317c221f8e4b2b6091651f23a77098ec5cb5b';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,36 +29,27 @@ class _SystemHash {
   }
 }
 
-abstract class _$UserPostsNotifier
-    extends BuildlessAutoDisposeAsyncNotifier<List<Event>> {
-  late final String pubHex;
+/// See also [followList].
+@ProviderFor(followList)
+const followListProvider = FollowListFamily();
 
-  FutureOr<List<Event>> build(
-    String pubHex,
-  );
-}
+/// See also [followList].
+class FollowListFamily extends Family<AsyncValue<List<String>>> {
+  /// See also [followList].
+  const FollowListFamily();
 
-/// See also [UserPostsNotifier].
-@ProviderFor(UserPostsNotifier)
-const userPostsNotifierProvider = UserPostsNotifierFamily();
-
-/// See also [UserPostsNotifier].
-class UserPostsNotifierFamily extends Family<AsyncValue<List<Event>>> {
-  /// See also [UserPostsNotifier].
-  const UserPostsNotifierFamily();
-
-  /// See also [UserPostsNotifier].
-  UserPostsNotifierProvider call(
+  /// See also [followList].
+  FollowListProvider call(
     String pubHex,
   ) {
-    return UserPostsNotifierProvider(
+    return FollowListProvider(
       pubHex,
     );
   }
 
   @override
-  UserPostsNotifierProvider getProviderOverride(
-    covariant UserPostsNotifierProvider provider,
+  FollowListProvider getProviderOverride(
+    covariant FollowListProvider provider,
   ) {
     return call(
       provider.pubHex,
@@ -77,30 +68,32 @@ class UserPostsNotifierFamily extends Family<AsyncValue<List<Event>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'userPostsNotifierProvider';
+  String? get name => r'followListProvider';
 }
 
-/// See also [UserPostsNotifier].
-class UserPostsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    UserPostsNotifier, List<Event>> {
-  /// See also [UserPostsNotifier].
-  UserPostsNotifierProvider(
+/// See also [followList].
+class FollowListProvider extends AutoDisposeFutureProvider<List<String>> {
+  /// See also [followList].
+  FollowListProvider(
     String pubHex,
   ) : this._internal(
-          () => UserPostsNotifier()..pubHex = pubHex,
-          from: userPostsNotifierProvider,
-          name: r'userPostsNotifierProvider',
+          (ref) => followList(
+            ref as FollowListRef,
+            pubHex,
+          ),
+          from: followListProvider,
+          name: r'followListProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$userPostsNotifierHash,
-          dependencies: UserPostsNotifierFamily._dependencies,
+                  : _$followListHash,
+          dependencies: FollowListFamily._dependencies,
           allTransitiveDependencies:
-              UserPostsNotifierFamily._allTransitiveDependencies,
+              FollowListFamily._allTransitiveDependencies,
           pubHex: pubHex,
         );
 
-  UserPostsNotifierProvider._internal(
+  FollowListProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -113,20 +106,13 @@ class UserPostsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
   final String pubHex;
 
   @override
-  FutureOr<List<Event>> runNotifierBuild(
-    covariant UserPostsNotifier notifier,
+  Override overrideWith(
+    FutureOr<List<String>> Function(FollowListRef provider) create,
   ) {
-    return notifier.build(
-      pubHex,
-    );
-  }
-
-  @override
-  Override overrideWith(UserPostsNotifier Function() create) {
     return ProviderOverride(
       origin: this,
-      override: UserPostsNotifierProvider._internal(
-        () => create()..pubHex = pubHex,
+      override: FollowListProvider._internal(
+        (ref) => create(ref as FollowListRef),
         from: from,
         name: null,
         dependencies: null,
@@ -138,14 +124,13 @@ class UserPostsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<UserPostsNotifier, List<Event>>
-      createElement() {
-    return _UserPostsNotifierProviderElement(this);
+  AutoDisposeFutureProviderElement<List<String>> createElement() {
+    return _FollowListProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is UserPostsNotifierProvider && other.pubHex == pubHex;
+    return other is FollowListProvider && other.pubHex == pubHex;
   }
 
   @override
@@ -157,18 +142,17 @@ class UserPostsNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 }
 
-mixin UserPostsNotifierRef on AutoDisposeAsyncNotifierProviderRef<List<Event>> {
+mixin FollowListRef on AutoDisposeFutureProviderRef<List<String>> {
   /// The parameter `pubHex` of this provider.
   String get pubHex;
 }
 
-class _UserPostsNotifierProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<UserPostsNotifier,
-        List<Event>> with UserPostsNotifierRef {
-  _UserPostsNotifierProviderElement(super.provider);
+class _FollowListProviderElement
+    extends AutoDisposeFutureProviderElement<List<String>> with FollowListRef {
+  _FollowListProviderElement(super.provider);
 
   @override
-  String get pubHex => (origin as UserPostsNotifierProvider).pubHex;
+  String get pubHex => (origin as FollowListProvider).pubHex;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
