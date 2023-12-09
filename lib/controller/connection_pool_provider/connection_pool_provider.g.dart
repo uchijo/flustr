@@ -6,11 +6,11 @@ part of 'connection_pool_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$connectionPoolHash() => r'1df3eb46b5ff8714250825080885d9fa48a6a387';
+String _$connectionPoolHash() => r'505a2e2978e1b89547c0cfa3e81b743b60041ca7';
 
 /// See also [connectionPool].
 @ProviderFor(connectionPool)
-final connectionPoolProvider = AutoDisposeProvider<ConnectionPool?>.internal(
+final connectionPoolProvider = Provider<ConnectionPool?>.internal(
   connectionPool,
   name: r'connectionPoolProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -20,6 +20,6 @@ final connectionPoolProvider = AutoDisposeProvider<ConnectionPool?>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef ConnectionPoolRef = AutoDisposeProviderRef<ConnectionPool?>;
+typedef ConnectionPoolRef = ProviderRef<ConnectionPool?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

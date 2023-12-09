@@ -24,6 +24,24 @@ class UserPostsNotifier extends _$UserPostsNotifier {
       // fixme: タイムアウトはもっと考えたほうが良さそう
       timeout: const Duration(seconds: 3),
     );
+    final aggregator = pool.getEventStreamAfterEose(
+      [
+        Filter(
+          authors: [pubHex],
+          kinds: [1],
+          limit: 30,
+        ),
+      ],
+    );
+    aggregator.eventStream.listen((e) {
+      state = switch (state) {
+        AsyncData(:final value) => AsyncData([e, ...value]),
+        _ => state,
+      };
+    });
+    ref.onDispose(() {
+      aggregator.dispose();
+    });
     return posts
         .sortedBy<num>((element) => element.createdAt)
         .reversed

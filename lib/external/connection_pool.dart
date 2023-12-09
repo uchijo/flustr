@@ -91,7 +91,7 @@ class ConnectionPool {
             if (eose &&
                 message.message is Event &&
                 (message.message as Event).subscriptionId == subId) {
-              aggregator.addEvent(message.messageType as Event);
+              aggregator.addEvent(message.message as Event);
             }
             break;
           default:

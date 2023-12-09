@@ -4,13 +4,14 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'connection_pool_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 ConnectionPool? connectionPool(ConnectionPoolRef ref) {
   final rawUrls = ref.watch(relayUrlProvider);
   final urls = switch (rawUrls) {
     AsyncData(:final value) => value,
     _ => null,
   };
+  print('urls: $urls');
   if (urls == null) return null;
   return ConnectionPool(urls);
 }

@@ -17,6 +17,7 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(profileProvider(pubHex));
     final rawPosts = ref.watch(UserPostsNotifierProvider(pubHex));
+
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
