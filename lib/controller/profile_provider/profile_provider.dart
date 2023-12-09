@@ -42,10 +42,7 @@ class ProfileData with _$ProfileData {
 
 @riverpod
 FutureOr<ProfileData> profile(ProfileRef ref, String pubHex) async {
-  final pool = ref.watch(connectionPoolProvider);
-  if (pool == null) {
-    throw Exception('pool is null');
-  }
+  final pool = await ref.watch(connectionPoolProvider.future);
   return fetchProfile(pool, pubHex);
 }
 

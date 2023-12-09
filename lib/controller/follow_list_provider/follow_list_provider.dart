@@ -1,17 +1,21 @@
 import 'package:collection/collection.dart';
 import 'package:flustr/controller/connection_pool_provider/connection_pool_provider.dart';
+import 'package:flustr/controller/current_pubhex_provider/current_pubhex_provider.dart';
 import 'package:nostr/nostr.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'follow_list_provider.g.dart';
 
 @riverpod
-FutureOr<List<String>> followList(FollowListRef ref, String pubHex) async {
-  final pool = ref.watch(connectionPoolProvider);
-  if (pool == null) {
-    throw Exception('pool is null');
+FutureOr<List<String>> followList(FollowListRef ref) async {
+  final pool = await ref.watch(connectionPoolProvider.future);
+
+  final pubHex = ref.watch(currentPubHexProvider);
+  if (pubHex == null) {
+    throw Exception('not logged in!');
   }
-  final hoge = await pool.getStoredEvent(
+
+  final rawEvents = await pool.getStoredEvent(
     [
       Filter(
         kinds: [3],
@@ -20,7 +24,7 @@ FutureOr<List<String>> followList(FollowListRef ref, String pubHex) async {
     ],
     timeout: const Duration(seconds: 5),
   );
-  final followeesPubHex = hoge
+  final followeesPubHex = rawEvents
       .map(
         (e) => e.tags
             .where((element) => element.first == 'p')
@@ -29,7 +33,5 @@ FutureOr<List<String>> followList(FollowListRef ref, String pubHex) async {
       )
       .flattened
       .toList();
-  print(followeesPubHex);
-  print(followeesPubHex.length);
   return followeesPubHex;
 }

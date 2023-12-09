@@ -9,10 +9,7 @@ part 'user_posts_notifier.g.dart';
 class UserPostsNotifier extends _$UserPostsNotifier {
   @override
   Future<List<Event>> build(String pubHex) async {
-    final pool = ref.watch(connectionPoolProvider);
-    if (pool == null) {
-      throw Exception('connection pool is null.');
-    }
+    final pool = await ref.watch(connectionPoolProvider.future);
     final posts = await pool.getStoredEvent(
       [
         Filter(
@@ -53,12 +50,12 @@ class UserPostsNotifier extends _$UserPostsNotifier {
   Future<void> loadOlderPosts() async {
     if (_loading) return;
     _loading = true;
-    final pool = ref.read(connectionPoolProvider);
+    final pool = await ref.read(connectionPoolProvider.future);
     final currentPosts = switch (state) {
       AsyncData(:final value) => value,
       _ => null,
     };
-    if (currentPosts == null || pool == null) {
+    if (currentPosts == null) {
       return;
     }
 
