@@ -1,4 +1,6 @@
-import 'package:flustr/controller/setting_provider/setting_provider.dart';
+import 'package:flustr/controller/current_pubhex_provider/current_pubhex_provider.dart';
+import 'package:flustr/controller/timeline_posts_notifier/timeline_posts_notifier.dart';
+import 'package:flustr/view/component/event_view.dart';
 import 'package:flustr/view/screen/profile_screen.dart';
 import 'package:flustr/view/screen/setting_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +11,9 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pubHex = switch (ref.watch(settingNotifierProvider)) {
-      AsyncData(:final value) => value.hexPubKey,
-      _ => null,
-    };
+    final pubHex = ref.watch(currentPubHexProvider);
+    final timelinePosts = ref.watch(timelinePostsNotifierProvider);
+
     return Scaffold(
       // 投稿ボタン
       floatingActionButton: FloatingActionButton(
@@ -59,75 +60,20 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: ListView(
-        children: const [
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-          Text('hogehoge'),
-          SizedBox(height: 20),
-        ],
+      body: RefreshIndicator(
+        onRefresh: () async => ref.invalidate(timelinePostsNotifierProvider),
+        child: ListView(
+          children: switch (timelinePosts) {
+            AsyncLoading() => [const LinearProgressIndicator()],
+            AsyncError(:final error, :final stackTrace) => [
+                Text(error.toString()),
+                Text(stackTrace.toString()),
+              ],
+            AsyncData(value: final posts) =>
+              posts.map((e) => EventView(event: e)).toList(),
+            _ => [const Text('Oops! something went wrong!')],
+          },
+        ),
       ),
     );
   }
