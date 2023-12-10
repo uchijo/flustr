@@ -45,7 +45,7 @@ sealed class AppSetting with _$AppSetting {
     try {
       final result = switch (this) {
         NsecAppSetting(nsec1: _) =>
-          hexSecKey != null ? bip340.getPublicKey(hexSecKey!) : null,
+          hexSecKey != null ? Nip19.encodePubkey(bip340.getPublicKey(hexSecKey!)) : null,
         NpubAppSetting(npub1: final String key) => key,
         _ => null,
       };

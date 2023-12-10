@@ -73,21 +73,14 @@ class MockConnectionPool extends _i1.Mock implements _i3.ConnectionPool {
       );
 
   @override
-  Map<String, _i2.StreamAggregator> get subscriptions => (super.noSuchMethod(
-        Invocation.getter(#subscriptions),
-        returnValue: <String, _i2.StreamAggregator>{},
-        returnValueForMissingStub: <String, _i2.StreamAggregator>{},
-      ) as Map<String, _i2.StreamAggregator>);
-
-  @override
-  set subscriptions(Map<String, _i2.StreamAggregator>? _subscriptions) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #subscriptions,
-          _subscriptions,
+  _i4.Future<void> addEvent(_i6.Event? e) => (super.noSuchMethod(
+        Invocation.method(
+          #addEvent,
+          [e],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
   _i4.Future<List<_i6.Event>> getStoredEvent(

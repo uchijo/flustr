@@ -129,7 +129,7 @@ class __$$ProfileDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ProfileDataImpl extends _ProfileData {
+class _$ProfileDataImpl extends _ProfileData with DiagnosticableTreeMixin {
   _$ProfileDataImpl(
       {required this.name,
       required this.picture,
@@ -150,8 +150,19 @@ class _$ProfileDataImpl extends _ProfileData {
   final String pubHex;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProfileData(name: $name, picture: $picture, about: $about, pubHex: $pubHex)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProfileData'))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('picture', picture))
+      ..add(DiagnosticsProperty('about', about))
+      ..add(DiagnosticsProperty('pubHex', pubHex));
   }
 
   @override

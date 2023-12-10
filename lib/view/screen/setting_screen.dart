@@ -67,6 +67,7 @@ class SettingScreen extends ConsumerWidget {
                       TextField(
                         onChanged: (value) {
                           _textFieldContent = value;
+                          debugPrint(value);
                         },
                       ),
                       const SizedBox(width: 50),

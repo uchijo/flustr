@@ -10,7 +10,6 @@ class ConnectionPool {
     final completer = Completer<void>();
     connected = completer.future;
 
-    subscriptions = <String, StreamAggregator>{};
     final socketFutures = <Future<WebSocket>>[];
     for (final url in _urls) {
       socketFutures.add(WebSocket.connect(url));
@@ -31,8 +30,11 @@ class ConnectionPool {
   final List<String> _urls;
   late final List<(WebSocket, Stream<dynamic>)> relays;
 
-  // subscriptionに対応する出力先stream
-  late final Map<String, StreamAggregator> subscriptions;
+  Future<void> addEvent(Event e) async {
+    for (final (adder, _) in relays) {
+      adder.add(e.serialize());
+    }
+  }
 
   Future<List<Event>> getStoredEvent(
     List<Filter> filters, {
@@ -123,3 +125,33 @@ class ConnectionPool {
     return aggregator;
   }
 }
+
+Event buildTextEvent(String content, String secHex) {
+  return Event.from(kind: 1, content: content, privkey: secHex);
+}
+
+// Future<bool> _addEventHelper(
+//   WebSocket socket,
+//   Stream<dynamic> out,
+//   Event e,
+// ) async {
+//   socket.add(e.serialize());
+//   final okCompleter = Completer();
+//   var ok = false;
+//   out.listen((msg) {
+//     final message = Message.deserialize(msg);
+//     switch (message.messageType) {
+//       case MessageType.ok:
+//         ok = true;
+//         okCompleter.complete();
+//         break;
+//       default:
+//         break;
+//     }
+//   });
+//   await Future.wait([
+//     Future.delayed(const Duration(milliseconds: 1000)),
+//     okCompleter.future,
+//   ]);
+//   return ok;
+// }
