@@ -23,6 +23,12 @@ class ConnectionPool {
     );
   }
 
+  void dispose() {
+    for (final (socket, _) in relays) {
+      socket.close();
+    }
+  }
+
   // 接続完了後にresolveされる
   late Future<void> connected;
 

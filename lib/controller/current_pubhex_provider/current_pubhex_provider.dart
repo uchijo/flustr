@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'current_pubhex_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 String? currentPubHex(CurrentPubHexRef ref) {
   final settings = ref.watch(settingNotifierProvider);
   final pubHex = switch (settings) {

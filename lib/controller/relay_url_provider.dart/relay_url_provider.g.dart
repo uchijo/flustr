@@ -6,7 +6,7 @@ part of 'relay_url_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$relayUrlHash() => r'b4548ac245d9964627e68c0963d4e005d61ab245';
+String _$relayUrlHash() => r'c9c42a883d556115c8717e446058d094c2186aca';
 
 /// See also [relayUrl].
 @ProviderFor(relayUrl)

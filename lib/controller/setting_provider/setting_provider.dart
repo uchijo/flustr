@@ -68,7 +68,7 @@ sealed class AppSetting with _$AppSetting {
       _$AppSettingFromJson(json);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SettingNotifier extends _$SettingNotifier {
   @override
   Future<AppSetting> build() async {

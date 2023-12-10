@@ -73,6 +73,15 @@ class MockConnectionPool extends _i1.Mock implements _i3.ConnectionPool {
       );
 
   @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   _i4.Future<void> addEvent(_i6.Event? e) => (super.noSuchMethod(
         Invocation.method(
           #addEvent,
