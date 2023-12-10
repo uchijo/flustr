@@ -83,10 +83,10 @@ class HomeScreen extends ConsumerWidget {
                 ),
               );
             } else {
-              showDialog(
-                context: context,
-                builder: (ctx) =>
-                    const Text('please enter key in setting screen.'),
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('provide your key in settings'),
+                ),
               );
             }
           },
