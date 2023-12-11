@@ -26,7 +26,7 @@ Map<String, dynamic> _$$ProfileDataImplToJson(_$ProfileDataImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$profileHash() => r'1e14fb0b58e8c56067bcf1283e1f5a2046327665';
+String _$profileHash() => r'76c824803854d89d5fad1dcd94618271ce99bfb9';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -92,7 +92,7 @@ class ProfileFamily extends Family<AsyncValue<ProfileData>> {
 }
 
 /// See also [profile].
-class ProfileProvider extends AutoDisposeFutureProvider<ProfileData> {
+class ProfileProvider extends FutureProvider<ProfileData> {
   /// See also [profile].
   ProfileProvider(
     String pubHex,
@@ -143,7 +143,7 @@ class ProfileProvider extends AutoDisposeFutureProvider<ProfileData> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<ProfileData> createElement() {
+  FutureProviderElement<ProfileData> createElement() {
     return _ProfileProviderElement(this);
   }
 
@@ -161,13 +161,13 @@ class ProfileProvider extends AutoDisposeFutureProvider<ProfileData> {
   }
 }
 
-mixin ProfileRef on AutoDisposeFutureProviderRef<ProfileData> {
+mixin ProfileRef on FutureProviderRef<ProfileData> {
   /// The parameter `pubHex` of this provider.
   String get pubHex;
 }
 
-class _ProfileProviderElement
-    extends AutoDisposeFutureProviderElement<ProfileData> with ProfileRef {
+class _ProfileProviderElement extends FutureProviderElement<ProfileData>
+    with ProfileRef {
   _ProfileProviderElement(super.provider);
 
   @override

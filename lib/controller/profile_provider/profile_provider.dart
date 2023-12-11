@@ -41,7 +41,7 @@ class ProfileData with _$ProfileData {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 FutureOr<ProfileData> profile(ProfileRef ref, String pubHex) async {
   final pool = await ref.watch(connectionPoolProvider.future);
   return fetchProfile(pool, pubHex);
