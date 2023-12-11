@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'follow_list_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 FutureOr<List<String>> followList(FollowListRef ref) async {
   final pool = await ref.watch(connectionPoolProvider.future);
 

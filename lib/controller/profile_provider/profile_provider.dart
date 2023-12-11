@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flustr/controller/connection_pool_provider/connection_pool_provider.dart';
+import 'package:flustr/controller/profile_cache_provider/profile_cache_provider.dart';
 import 'package:flustr/external/connection_pool.dart';
 import 'package:flutter/foundation.dart';
 import 'package:nostr/nostr.dart';
@@ -43,6 +44,10 @@ class ProfileData with _$ProfileData {
 
 @Riverpod(keepAlive: true)
 FutureOr<ProfileData> profile(ProfileRef ref, String pubHex) async {
+  final cache = await ref.watch(profileCacheProvider.future);
+  if (cache.any((element) => element.pubHex == pubHex)) {
+    return cache.firstWhere((e) => e.pubHex == pubHex);
+  }
   final pool = await ref.watch(connectionPoolProvider.future);
   return fetchProfile(pool, pubHex);
 }
@@ -52,7 +57,7 @@ Future<ProfileData> fetchProfile(ConnectionPool pool, String pubHex) async {
     [
       Filter(authors: [pubHex], kinds: [0], limit: 1),
     ],
-    timeout: const Duration(seconds: 3),
+    timeout: const Duration(seconds: 10),
   );
 
   // パースで死ぬことを考慮

@@ -39,7 +39,10 @@ class EventView extends ConsumerWidget {
                   Text(
                     switch (author) {
                       AsyncData(value: final authorProf) => authorProf.name,
-                      _ => event.pubkey,
+                      AsyncLoading() => 'loading',
+                      AsyncError(:final error) =>
+                        error.toString(),
+                        _ => "aaa",
                     },
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),

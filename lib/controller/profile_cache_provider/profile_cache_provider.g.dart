@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'follow_list_provider.dart';
+part of 'profile_cache_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$followListHash() => r'a7d5a0480598256941c562e526a593fff02a7103';
+String _$profileCacheHash() => r'cca907017f1aac4c04d8f820dce76ab1d141e92e';
 
-/// See also [followList].
-@ProviderFor(followList)
-final followListProvider = FutureProvider<List<String>>.internal(
-  followList,
-  name: r'followListProvider',
+/// See also [profileCache].
+@ProviderFor(profileCache)
+final profileCacheProvider = FutureProvider<List<ProfileData>>.internal(
+  profileCache,
+  name: r'profileCacheProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$followListHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$profileCacheHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef FollowListRef = FutureProviderRef<List<String>>;
+typedef ProfileCacheRef = FutureProviderRef<List<ProfileData>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
