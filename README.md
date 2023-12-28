@@ -1,16 +1,15 @@
 # flustr
 
-A new Flutter project.
+a minimal nostr client, built with flutter.
+
+capable of creating post, viewing followees' posts, and user's own posts.
+
+works on Android, Windows, possibly MacOS, iOS.
+
+cf. https://qiita.com/Uchijo/items/30cd90de801c7507e372
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```shell-session
+$ flutter run
+```
